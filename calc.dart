@@ -1,140 +1,119 @@
+import 'package:exam/home.dart';
 import 'package:flutter/material.dart';
 
-
-void main(){
+void main() {
   runApp(MaterialApp(
-    home:Calc(),
-    debugShowCheckedModeBanner: false,
+    home: MyApp(),
   ));
 }
 
-class Calc extends StatefulWidget {
-  const Calc({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
   @override
-  State<Calc> createState() => _CalcState();
+  State<MyApp> createState() => _MyAppState();
 }
 
-class _CalcState extends State<Calc> {
-  TextEditingController controller1 =new TextEditingController();
-  TextEditingController controller2 = new TextEditingController();
-
-  int result=0,num1=0,num2=0;
-
-  add(){
-    setState(() {
-      num1 = int.parse(controller1.text);
-      num2 = int.parse(controller2.text);
-      result=num1+num2;
-    });
-  }
-
-  sub(){
-    setState(() {
-      num1 = int.parse(controller1.text);
-      num2 = int.parse(controller2.text);
-      result=num1-num2;
-    });
-  }
-
-  mul(){
-    setState(() {
-      num1 = int.parse(controller1.text);
-      num2 = int.parse(controller2.text);
-      result=num1*num2;
-    });
-  }
-
-  div(){
-    setState(() {
-      num1 = int.parse(controller1.text);
-      num2 = int.parse(controller2.text);
-      result=num1~/num2;
-    });
-  }
+class _MyAppState extends State<MyApp> {
+  TextEditingController controller1 = TextEditingController();
+  TextEditingController controller2 = TextEditingController();
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Calculator'),
-        backgroundColor:Colors.red,
-        actions:[
-          IconButton(onPressed: (){}, icon: Icon(Icons.person)),
-          IconButton(onPressed: (){}, icon: Icon(Icons.person_3)),
-        ],
-      ),
-      body: Padding(padding:  EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          Text(
-            "Result: $result",
-            style:TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          
-          SizedBox(height: 20,),
-
-          TextField(
-            controller: controller1,
-            decoration: InputDecoration(
-            labelText: 'Enter First Number: ',
-            border:OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20)
-            ),
-          ),
-          ),
-
-          SizedBox(height: 20,),
-
-        TextField(
-            controller: controller2,
-            decoration: InputDecoration(
-            labelText: 'Enter First Number: ',
-            border:OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20)
-            ),
-          ),
-          ),
-
-          SizedBox(height: 20,),  
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(onPressed: (){
-              add();
-              controller1.clear();
-              controller2.clear();
-              }, child: Text('add'),
+      appBar: AppBar(),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              accountName: Text('Hello'), 
+              accountEmail: Text('company@123'),
+              currentAccountPicture: Icon(Icons.person_3_rounded),
               ),
-              ElevatedButton(onPressed: (){
-              sub();
-              controller1.clear();
-              controller2.clear();
-              }, child: Text('sub'),
+            const SizedBox(height: 20,),
+            const Divider(height: 1.0,),
+
+            ListTile(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: 
+                  (context) =>Home(),
+                ));
+              },
+              title: Text('Home'),
+              leading: Icon(Icons.home),
+            ),
+            const Divider(height: 1.0,),
+
+            ListTile(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: 
+                  (context) =>Home(),
+                ));
+              },
+              title: Text('Person'),
+              leading: Icon(Icons.person),
+            ),
+            const Divider(height: 1.0,),
+
+            ListTile(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: 
+                  (context) =>Home(),
+                ));
+              },
+              title: Text('Person'),
+              leading: Icon(Icons.person_2),
+            ),
+            const Divider(height: 1.0,),
+          ],
+        ),
+      ),
+      body: Column(
+        children: [
+          Text('Exam '),
+          Icon(Icons.person),
+          Row(
+            children: [
+              Image.network('https://unsplash.com/photos/a-desk-with-a-keyboard-mouse-and-a-book-KkFctpFp8vc'),
+              Container(
+                width: 300,
+                height: 300,
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Enter username',
+                        prefixIcon: Icon(Icons.person_2_sharp),
+                      ),
+                      controller: controller1,
+                    ),
+                    SizedBox(height: 10,),
+
+                    TextField(
+                      obscuringCharacter: '*',
+                      obscureText: true,
+                      decoration: InputDecoration
+                      (labelText: 'Enter Password',
+                      prefixIcon: Icon(Icons.password),
+                      
+                      ),
+                      controller: controller2,
+                      ),
+                    SizedBox(height: 10,),
+
+                    ElevatedButton(onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return Home();
+                      },));
+                    }, child: Text('Login'))
+                  ],
+                
+                ),
               ),
             ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(onPressed: (){
-                mul();
-                controller1.clear();
-                controller2.clear();
-              }, child: Text('Mul')
-              ),
-
-              ElevatedButton(onPressed: (){
-                div();
-                controller1.clear();
-                controller2.clear();
-              }, child: Text('Div')
-              ),
-
-          ],)
+          )
         ],
-      ),
       ),
     );
   }
